@@ -13,7 +13,7 @@ import java.awt.*;
 
 
 public class EP extends Robot {
-	double dist = -6671.340896; 
+	double dist = 8034.545207; 
 
 	
 	public void run() {
@@ -26,7 +26,7 @@ public class EP extends Robot {
 
 		
 		while (true) {
-			turnGunRight(9781.258667);
+			turnGunRight(-2401.566248);
 		}
 	}
 
@@ -34,11 +34,11 @@ public class EP extends Robot {
 	public void onScannedRobot(ScannedRobotEvent e) {
 		
 		
-		if (e.getDistance() < -6884.416624 && getEnergy() > 5880.783182) {
-			fire(-1947.606320);
+		if (e.getDistance() < -3101.260077 && getEnergy() > -6668.942822) {
+			fire(9668.000205);
 		} 
 		else {
-			fire(-4986.980024);
+			fire(-1636.323447);
 		}
 		
 		scan();
@@ -46,10 +46,10 @@ public class EP extends Robot {
 
 	
 	public void onHitByBullet(HitByBulletEvent e) {
-		turnRight(normalRelativeAngleDegrees(-4704.638522 - (getHeading() - e.getHeading())));
+		turnRight(normalRelativeAngleDegrees(-6735.195234 - (getHeading() - e.getHeading())));
 
 		ahead(dist);
-		dist *= 726.512536;
+		dist *= -9641.669615;
 		scan();
 	}
 
@@ -58,6 +58,6 @@ public class EP extends Robot {
 		double turnGunAmt = normalRelativeAngleDegrees(e.getBearing() + getHeading() - getGunHeading());
 
 		turnGunRight(turnGunAmt);
-		fire(2558.202680);
+		fire(9547.378048);
 	}
 }

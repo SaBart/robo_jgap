@@ -4,38 +4,35 @@ import robocode.control.events.*;
  * Robocode Battle Observer
  */
 class Observer extends BattleAdaptor {
-	int robotScore = 0;
-	int enemyScore = 0;
+	int score = 0;
 	String name; // robot name
 
 	public Observer(String name) {
 		this.name = name;
 	}
 
-	// Called when the battle is completed successfully with battle results
+	// battle completed successfully
 	public void onBattleCompleted(BattleCompletedEvent e) {
-		System.out.println("Battle completed");
-		// Print out the sorted results with the robot names
-		System.out.println("Battle results: ");
+		score=0;
 		for (robocode.BattleResults result : e.getSortedResults()) {
 			if (result.getTeamLeaderName().equals(name)) {
-				robotScore = result.getScore();
+				score = result.getScore();
+//				System.out.println(result.getScore());
 			}
-			System.out.println(result.getTeamLeaderName() + "=" + result.getScore());
 		}
 	}
 
-	// Called when the game sends out an information message during the battle
+	// information message during the battle
 	public void onBattleMessage(BattleMessageEvent e) {
-		System.out.println("Msg> " + e.getMessage());
+		//System.out.println(e.getMessage());
 	}
 
-	// Called when the game sends out an error message during the battle
+	//  error message during the battle
 	public void onBattleError(BattleErrorEvent e) {
-		System.err.println("Err> " + e.getError());
+		System.err.println(e.getError());
 	}
 
 	public int getScore() {
-		return robotScore;
+		return score;
 	}
 }

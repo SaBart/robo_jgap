@@ -11,12 +11,14 @@ public class Fitness extends FitnessFunction {
 	int round_count;
 	String name;
 	Boolean gui;
+	String[] enemies;
 	
-	public Fitness(int round_count, String name, Boolean gui)
+	public Fitness(int round_count, String name, Boolean gui, String[] enemies)
 	{
 		this.round_count=round_count;
 		this.name=name;
 		this.gui=gui;
+		this.enemies=enemies;
 	}
 	
 	@Override
@@ -25,13 +27,20 @@ public class Fitness extends FitnessFunction {
 		RobocodeEngine engine = new RobocodeEngine(new java.io.File("")); // create robocode engine
 		Observer observer=new Observer(name);
 		engine.addBattleListener(observer); // add battle listener to engine
-		engine.setVisible(gui); // show GUI 
+		engine.setVisible(gui); // show GUI
 		BattlefieldSpecification battlefield = new BattlefieldSpecification(800, 600); // battlefield size
-		RobotSpecification[] selectedRobots = engine.getLocalRepository("sample.Fire,"+name+"*"); // robots in battle
-		BattleSpecification battleSpec = new BattleSpecification(round_count, battlefield, selectedRobots);
-		engine.runBattle(battleSpec, true); // run battle
+		
+		int fitness=0;
+		for (String enemy:enemies)
+		{
+			RobotSpecification[] selectedRobots = engine.getLocalRepository(enemy+","+name); // robots in battle
+			BattleSpecification battleSpec = new BattleSpecification(round_count, battlefield, selectedRobots);
+			engine.runBattle(battleSpec, true); // run battle
+			fitness+=observer.getScore(); // set fitness score
+		}
+//		System.out.println(fitness);
 		engine.close(); // clean up engine
-		int fitness = observer.getScore(); // set fitness score
+		
 		return fitness > 0 ? fitness : 0; // return fitness score if it's over 0
 	}
 }
