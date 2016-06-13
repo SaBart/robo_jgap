@@ -21,8 +21,8 @@ public class Factory {
 	private static String template;
 	private static Double[] defaultGenes;
 
-	public Factory(String source, String dest) {
-		Factory.file=dest;
+	public Factory(String source, String directory, String pack, String name) {
+		Factory.file=directory+"/"+pack+"/" + name +".java";
 		try {
 			FileReader fstream = new FileReader(source);
 			BufferedReader in = new BufferedReader(fstream);
@@ -34,8 +34,8 @@ public class Factory {
 		    }
 
 		    String template=sb.toString().replaceAll("//.*|(\"(?:\\\\[^\"]|\\\\\"|.)*?\")|(?s)/\\*.*?\\*/", ""); // remove comments
-		    template=template.replaceAll("package ([^;]+)", "package custom"); // change package name
-		    template=template.replaceAll("class ([^ ]+)", "class EP"); // change class name
+		    template=template.replaceAll("package ([^;]+)", "package "+ pack); // change package name
+		    template=template.replaceAll("class ([^ ]+)", "class "+ name); // change class name
 		    template=template.replaceAll("int", "double"); // int to double
 		    
 		    List<Double> ds=new ArrayList<>();
